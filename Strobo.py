@@ -42,8 +42,8 @@ class Sinus:
 
 
 def main():
-    N = 1000
-    nu0 = 0.48
+    N = 100
+    nu0 = 0.01
 
     S = Sinus(N, nu0)
 

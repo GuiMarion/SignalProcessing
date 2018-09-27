@@ -192,40 +192,35 @@ def conv(x, h):
 
 def main():
 
-    # # Simple
-    # x = functionX(10)
-    # h = functionH(30)
+    # Simple
+    x = functionX(10)
+    h = functionH(30)
 
-    # Y = conv(x,h)
+    Y = conv(x,h)
 
-    # plt.plot(Y, 'k')
-    # plt.plot([x.getElem(i) for i in range(30)])
-    # plt.show()
+    plt.plot(Y, 'k')
+    plt.plot([x.getElem(i) for i in range(30)])
+    plt.show()
 
-    # # Noisy 
-    # x = functionXNoisy(10, 1)
-    # h = functionH(30)
+    # Noisy 
+    x = functionXNoisy(10, 1)
+    h = functionH(30)
 
-    # Y = conv(x,h)
+    Y = conv(x,h)
 
-    # plt.plot(Y, 'k')
-    # plt.plot([x.getElem(i) for i in range(30)])
-    # plt.show()
+    plt.plot(Y, 'k')
+    plt.plot([x.getElem(i) for i in range(30)])
+    plt.show()
 
-    N = 100
-    MS = [50,100,150]
+    # Noisy + h normalized
+    x = functionXNoisy(10, 1)
+    h = functionHN(30)
 
-    for M in MS:
+    Y = conv(x,h)
 
-        # Noisy + h normalized
-        x = functionXNoisy(N, 1)
-        h = functionHN(M)
-
-        Y = conv(x,h)
-
-        plt.plot(Y, 'k')
-        plt.plot([x.getElem(i) for i in range(M)])
-        plt.show()
+    plt.plot(Y, 'k')
+    plt.plot([x.getElem(i) for i in range(30)])
+    plt.show()
 
 
 
