@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import scipy.fftpack
 
-
 class Sinus:
 
     def __init__(self, N, nu0):
@@ -38,12 +37,12 @@ class Sinus:
         freq = np.fft.fftfreq(t.shape[-1])
         plt.plot(freq, sp.real, freq, sp.imag)
         
-        plt.show()  
+        plt.show()
 
 
 def main():
     N = 100
-    nu0 = 0.01
+    nu0 = 0.49
 
     S = Sinus(N, nu0)
 
