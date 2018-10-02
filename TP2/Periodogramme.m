@@ -4,33 +4,33 @@ m = 2*n;
 a = 0.5;
 b = 0.5;
 nu0 = 0.3;
+nbRepet = 100000;
 
-W = sigma.*randn(1,n); % bruit de variance sigma**2
-X = zeros(1,n);
+Variances = zeros(1, 11);
+for poi=0:nbRepet
+    for n=[2 4 8 16 32 64 128 256 512 1024 2048]
+        X = sigma.*randn(1,n); % bruit de variance sigma**2
 
-for i=1:n
-    delta = rand(1)*2*pi;
-    X(i) = b*cos(2*pi*nu0*i+ delta) + W(i);
+        MOYENNE = 0;
+        for i =1:n
+            MOYENNE = MOYENNE + X(i)/n;
+        end
+
+        % Question 2
+        TFD = fft(X, m);
+        IX = (1/n)*abs(TFD).^2 ; 
+
+        Variance = var(IX);
+
+        Variances(log2(n)) = Variances(log2(n)) + Variance/nbRepet;
+
+        % Question 3
+
+        RXX = ifft(IX, m);
+
+
+        %plot(1:m, rxx(X));
+
+    end
 end
-
-
-MOYENNE = 0;
-for i =1:n
-    MOYENNE = MOYENNE + X(i)/n;
-end
-
-% Question 2
-TFD = fft(X, m);
-IX = (1/n)*abs(TFD).^2 ; 
-
-%plot(1:m,IX)
-
-
-% Question 3
-
-RXX = ifft(IX, m);
-
-
-plot(1:m, rxx(X));
-
-
+plot(1:11,Variances)
