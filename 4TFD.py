@@ -214,6 +214,8 @@ def main():
 
         S = Cosinus(N, nu0)
 
+        S.plot()
+
         H = BoxCar(N)
         S.obspec(H, Nfft, nu0)
 
