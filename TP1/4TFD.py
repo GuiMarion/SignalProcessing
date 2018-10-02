@@ -135,6 +135,15 @@ def conv(x, h):
 
     return Y    
 
+
+def mult(L,L2):
+
+    Y = []
+    for i in range(min(len(L), len(L2))):
+        Y.append(L[i] * L2[i])
+
+    return Y
+
 class Cosinus:
 
     def __init__(self, N, nu0):
@@ -186,7 +195,7 @@ class Cosinus:
 
     def obspec(self, H, Nfft, nu0):
 
-        Y = conv(self, H)
+        Y = mult(self.COS, H.getAllValues())
 
         t = np.arange(Nfft)
         sp = np.fft.fft(Y, n = Nfft)
@@ -199,22 +208,20 @@ class Cosinus:
 
         plt.plot(freq, Y)    
 
-        plt.savefig("/Users/gui/Documents/IRCAM/SignalProcessing/Figs/TFD/TFD_"+ str(Nfft)+"_"+str(nu0)+ "_" +H.getName() +".png")
+        plt.savefig("/Users/gui/Documents/IRCAM/SignalProcessing/TP1/Figs/TFD/TFD_"+ str(Nfft)+"_"+str(nu0)+ "_" +H.getName() +".png")
 
         plt.show() 
 
 
 def main():
     N = 64
-    nu0 = 0.1
+    nu0 = 0.125
     NfftL = [32, 64, 128, 1024]
 
 
     for Nfft in NfftL:
 
         S = Cosinus(N, nu0)
-
-        S.plot()
 
         H = BoxCar(N)
         S.obspec(H, Nfft, nu0)

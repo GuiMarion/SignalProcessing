@@ -402,14 +402,14 @@ def main():
     X5.plotFFT()
 
     d1 = 0.1
-    d2 = 1/100
+    d2 = 1/100000000
 
     # Compute the order of the filter
     Nua = 0.3
     Nuc = 0.06
     O = int(2/(3*(Nua - Nuc)) * math.log10(1/(10*d1*d2)))
 
-    h = Func(signal.remez(O, [0, Nuc, Nua, 0.5], [d2, d1]))
+    h = Func(signal.remez(O, [0, Nuc, Nua, 0.5], [M, 0], [1/d2, 1/d1]))
 
     X6 = Func(conv(X5, h))
 
