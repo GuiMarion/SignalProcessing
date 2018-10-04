@@ -1,28 +1,29 @@
 p = 4;
-N = 128;
-a = [0.1 0.2 0.3 0.4];
+N = 1000000;
+NbRepet = 1000;
+mean_squaredError = 0;
+for poi=1:NbRepet
+    [X, phi] = genAR(p,N);
 
-X = genAR(p,N,a);
+    Autocov = acovb(X);
+    %disp(Autocov);
 
-Autocov = rxx(X);
-%disp(Autocov);
+    R = toeplitz(Autocov(1:p+1));
 
-plot(1:2*N, Autocov);
+    R = inv(R);
 
-R = zeros(p+1, p +1);
+    V = [1 zeros(1, p)].';
 
-for i=1:p+1
-    for j=1:p+1
-        R(i,j) = Autocov(int32(N*(j-i)/5 + N));
-        
-    end 
+    C = R*V;
+
+    squaredError = 0;
+
+    for i=1:p
+        squaredError = squaredError + (phi(i) + C(i+1)/C(1))^2; 
+    end
+
+    mean_squaredError = mean_squaredError + squaredError/NbRepet;
+    
 end
 
-R = inv(R);
-
-V = [1 0 0 0 0].';
-
-C = R*V;
-
-disp(C);
-
+disp(mean_squaredError/p)
