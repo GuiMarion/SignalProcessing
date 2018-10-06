@@ -204,6 +204,24 @@ class Cosinus:
 
         plt.show() 
 
+
+    def saveFTT(self, name):
+
+        t = np.arange(self.N)
+        sp = np.fft.fft(self.COS)
+        freq = np.fft.fftfreq(t.shape[-1])
+
+        Y = []
+
+        for i in range(len(sp.real)):
+            Y.append(20*math.log10(math.sqrt(sp.real[i]**2 + sp.imag[i]**2)))
+
+        plt.plot(freq, Y)
+        
+        plt.savefig(name)
+
+        plt.show()
+
 class W1:
 
     def __init__(self, N, nu0):
@@ -322,6 +340,41 @@ class Func:
         
         plt.show()
 
+    def saveFTT(self, name):
+
+        t = np.arange(self.N)
+        sp = np.fft.fft(self.X)
+        freq = np.fft.fftfreq(t.shape[-1])
+
+        Y = []
+
+        for i in range(len(sp.real)):
+            Y.append(20*math.log10(math.sqrt(sp.real[i]**2 + sp.imag[i]**2)))
+
+        plt.plot(freq, Y)
+        
+        plt.savefig(name)
+
+        plt.show()
+
+
+    def saveFTT2(self, name, K):
+
+        t = np.arange(K)
+        sp = np.fft.fft(self.X, n = K)
+        freq = np.fft.fftfreq(K)
+
+        Y = []
+
+        for i in range(len(sp.real)):
+            Y.append(20*math.log10(math.sqrt(sp.real[i]**2 + sp.imag[i]**2)))
+
+        plt.plot(freq, Y)
+        
+        plt.savefig(name)
+
+        plt.show()
+
 
 def plotFFT(X):
 
@@ -374,21 +427,22 @@ def main():
     # Centering cos with W
     w1 = W1(N, nu0)
     X1 = Func(Multiply(X, w1))
-    #X1.plotFFT()
+    X1.saveFTT("/Users/gui/Documents/IRCAM/SignalProcessing/TP1/Figs/Loupe/5.1_X1.png")
+
 
     # Filtering X1 with H
     H = BoxCar(N//2)
     X2 = Func(conv(X1, H))
-    #X2.plotFFT()
+    X2.saveFTT("/Users/gui/Documents/IRCAM/SignalProcessing/TP1/Figs/Loupe/5.1_X2.png")
 
     # Decimating signal with M
     X3 = Func(Decimate(X2,10))
-    #X3.plotFFT()
+    X3.saveFTT("/Users/gui/Documents/IRCAM/SignalProcessing/TP1/Figs/Loupe/5.1_X3.png")
 
     # Centering at 0.5 with W2
     w2 = W1(N, -0.5)
     Y1 = Func(Multiply(X3, w2))
-    #Y1.plotFFT()
+    Y1.saveFTT("/Users/gui/Documents/IRCAM/SignalProcessing/TP1/Figs/Loupe/5.1_Y1.png")
 
 
     # 5.2
@@ -396,10 +450,15 @@ def main():
     M = 32
 
     X4 = Cosinus(N*M, nu0, B, num)
-    X4.plotFFT()
+    X4.saveFTT("/Users/gui/Documents/IRCAM/SignalProcessing/TP1/Figs/Loupe/5.2_X4.png")
 
     X5 = Func(Multiply(X, w1))
-    X5.plotFFT()
+    X5.saveFTT("/Users/gui/Documents/IRCAM/SignalProcessing/TP1/Figs/Loupe/5.2_X5.png")
+
+    Hann = Hanning(N)
+    R = Func(Multiply(X5, Hann))
+
+    R.saveFTT("/Users/gui/Documents/IRCAM/SignalProcessing/TP1/Figs/Loupe/5.2_Hanning.X(NM).png")
 
     d1 = 0.1
     d2 = 1/100000000
@@ -413,10 +472,23 @@ def main():
 
     X6 = Func(conv(X5, h))
 
-    X6.plotFFT()
+    X6.saveFTT("/Users/gui/Documents/IRCAM/SignalProcessing/TP1/Figs/Loupe/5.2_Remez.png")
+
+    H = BoxCar(N)
 
 
-    
+    X7 = Func(Multiply(X6, H))
+    X7.saveFTT("/Users/gui/Documents/IRCAM/SignalProcessing/TP1/Figs/Loupe/5.2_Remez.Boxcar.png")
+
+    X7 = Func(Multiply(X6, Hann))
+    X7.saveFTT("/Users/gui/Documents/IRCAM/SignalProcessing/TP1/Figs/Loupe/5.2_Remez.Hanning.png")
+
+
+    X8 = Func(Decimate(X6, M))
+
+    X8.saveFTT2("/Users/gui/Documents/IRCAM/SignalProcessing/TP1/Figs/Loupe/5.2_Loupe_Last.png", N)
+
+
 
 main()
 
