@@ -19,7 +19,7 @@ for poi=1:NbRepet
     squaredError = 0;
 
     for i=1:p
-        squaredError = squaredError + (phi(i) + C(i+1)/C(1))^2; 
+        squaredError = squaredError + (phi(i) + C(i+1)/C(1)); 
     end
 
     mean_squaredError = mean_squaredError + squaredError/NbRepet;
