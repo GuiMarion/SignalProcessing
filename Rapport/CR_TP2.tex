@@ -25,7 +25,7 @@
 %	DOCUMENT INFORMATION
 %----------------------------------------------------------------------------------------
 
-\title{COMPTE RENDU TP 2 \\ Processus stationnaires au sens large} % Title
+\title{COMPTE RENDU TP 2\footnote{Le code est en libre accès sur \url{https://github.com/GuiMarion/SignalProcessing}} \\ Processus stationnaires au sens large} % Title
 
 \author{Guilhem \textsc{MARION} et Clément \textsc{LE MOINE VEILLON}} % Author name
 
@@ -349,7 +349,36 @@ donc $v=[\frac{1}{\sigma^{2}} \ \frac{-a_{1}}{\sigma^{2}} ... \frac{-a_{p}}{\sig
 \paragraph{Comparaison :}
 
 $\\\\$
-On obtient une erreur quadratique moyenne de 0.2884 pour les valeurs estimées des coefficients du vecteur $a$ ainsi que pour $\sigma$.
+On obtient une erreur quadratique moyenne (sur 1000 répétitions) de 0.2884 pour les valeurs estimées des coefficients du vecteur $a$. Ce qui semble plutôt convainquant, surtout qu'il semble que certains cas pathologiques (à découvrir) font grimper drastiquement cette moyenne. 
+
+
+\paragraph{Application à la parole}
+
+La synthèse du signal en suivant la procédure \textit{analyse-synthèse} semble très convainquante du fait qu'on entend disctinctement la phrase du signal original dans le signal synthètisé. On retrouvera ici les figures correspondantes (fig. 8). 
+
+\begin{figure}[!h]
+    \center
+    \includegraphics[width=7cm]{SynthNormal.png}
+    \caption{Analyse-synthèse}
+\end{figure}
+
+Nous avons tenté de modifier les intonations de la voix en changeant les valeurs des fréquences de voisement. Dans un premier temps en construisant un algorithme non-deterministe qui tente d'inverser les tendances des fréquences de voisement (i.e. produit une courbe ascendante quand il lit une coube descendante, cf. fig. 9). 
+
+\begin{figure}[!h]
+    \center
+    \includegraphics[width=7cm]{SynthInverse.png}
+    \caption{Analyse-synthèse tendances inversées}
+\end{figure}
+
+Et aussi une fonction affine croissante (fig. 10).
+
+\begin{figure}[!h]
+    \center
+    \includegraphics[width=7cm]{SynthLinear.png}
+    \caption{Analyse-synthèse fonction affine}
+\end{figure}
+
+On remarquera qu'à l'écoute\footnote{Les fichiers audio sont disponibles sur le git : \url{https://github.com/GuiMarion/SignalProcessing}} les intonations ne sont que partiellement modifiées et que selon la fonction utilisée on entend surout un filtre balayant les fréquences. 
 
 \end{document}
 
